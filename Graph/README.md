@@ -47,15 +47,15 @@ class UnionFind:
         root_x = self.find(x)
         root_y = self.find(y)
         if root_x != root_y: 
-            for i in range(n): 
+            for i in range(len(root)): 
                 if self.root[i] == root_y: 
                     self.root[i] = root_x
     
     def union_quickunion(self, x, y): 
         # connect the two nodes x and y
         # for QuickUnion, we only need to re-assign the 2 nodes root value once to reflect the relationship
-        root_x = self.root(x)
-        root_y = self.root(y)
+        root_x = self.find(x)
+        root_y = self.find(y)
         if root_x != root_y: 
             self.root[root_y] = root_x
     
