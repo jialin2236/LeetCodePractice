@@ -18,6 +18,7 @@ example: equations = [['a', 'b'], ['b', 'c']], values = [2, 3],
          queries = [['a', 'c'], ['b', 'a'], ['a', 'e'], ['a', 'a'], ['x', 'x']]
 """
 from typing import List
+from collections import defaultdict
 
 
 class UnionFind:
@@ -44,7 +45,16 @@ class UnionFind:
 
 
 class Solution:
-    def evaluate_division(self, equations: List[List[str]], values: List[int], queries: List[List[str]]) -> List[float]:
+    def evaluate_division_uf(self, equations: List[List[str]], values: List[int], queries: List[List[str]]) -> List[float]:
+        """
+        solution using UnionFind
+        time: O((M+N)logN) - M operations, N elements, union takes O(NlogN), for M queries, find takes O(MlogN)
+        space: O(N)
+        :param equations:
+        :param values:
+        :param queries:
+        :return:
+        """
         def ch2idx(ch: List[str]):
             base = ord('a')
             res = []
@@ -65,4 +75,44 @@ class Solution:
             else:
                 ans_i = float(-1)
             ans.append(ans_i)
+        return ans
+
+    def evaluate_division_dfs(self, equations: List[List[str]], values: List[int], queries: List[List[str]]) -> List[float]:
+        """
+        solution using DFS (graph search) with backtracking technique. For N equations and M queries:
+        time: O(M*N) - O(N) to build graph, O(N) to search at each iteration, repeat M times -> O(MN)
+        space: O(N) - graph takes O(N) additional space, visited O(N), recurrsion O(N) -> O(3N) -> O(N)
+        :param equations:
+        :param values:
+        :param queries:
+        :return:
+        """
+        graph = defaultdict(defaultdict)
+        for (n, d), v in zip(equations, values):
+            graph[n][d] = v
+            graph[d][n] = 1/v
+
+        def backtracking(curr_node, target_node, curr_value, visited):
+            neighbors = graph[curr_node]
+            nonlocal ret
+            if target_node in neighbors:
+                ret = curr_value * neighbors[target_node]
+                return
+            for nei, val in neighbors.items():
+                if nei not in visited:
+                    visited.add(nei)
+                    backtracking(nei, target_node, curr_value * val, visited)
+                    visited.remove(nei)
+
+        ans = []
+        for n, d in queries:
+            if n not in graph or d not in graph:
+                ret = -1.0
+            elif n == d:
+                ret = 1.0
+            else:
+                seen = {n}
+                ret = -1.0
+                backtracking(n, d, 1, seen)
+            ans.append(ret)
         return ans
