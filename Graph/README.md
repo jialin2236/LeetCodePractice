@@ -1,10 +1,20 @@
 # Graph key Topics
+## Key Topics
+- Disjoint Set (UnionFind)
+  - Usage: build graph from given list of edges, quick display number of subgraphs and  
+- DFS
+- BFS
+
 ## Disjoint Set
-key methods 
-- `QuickFind`
-- `QuickUnion`
-- `UnionByRank`
-- `Path Compression`
+key methods
+
+|    |  constructor  | `find`  | `union` |
+| ---   | ---        | ---     | ---     |
+| `QuickFind` | O(N)  | O(1)   | O(N)    |
+| `QuickUnion` | O(N) | O(N) worst | O(N) |
+| `UnionByRank` | O(N) | O(logN)   | O(logN) |
+| Path Compression | O(N) | O(logN), O(N) worse | O(logN) |
+
 
 Overall, `QuickFind` achieves O(1) time in finding the root of a node, by placing the find root process
 during the union of 2 nodes, and modify `self.root` using dfs like method during union. `QuickUnion` instead finds the root when 
@@ -37,6 +47,7 @@ class UnionFind:
     def find_quickunion(self, x): 
         # find the root node of node x
         # root of x is its direct parent node
+        # this is without path compression
         while self.root[x] != x: 
             x = self.root[x]
         return x
@@ -65,10 +76,12 @@ class UnionFind:
 </details>
 
 In above example, to union node 5 and node 6, and find node 6, would have worst case time complexity of O(N), since it's 
-just a line. To optimize the time complexity, `UnionByRank` could be used.
+just a line. To optimize the time complexity, `UnionByRank` and **Path Compression** could be used.
 
 The idea of `UnionByRank` is to merge the smaller graph/tree into the larger graph/tree, to avoid creating a graph/tree
-with depth of `depth1 + depth2`. See demonstration, 
+with depth of `depth1 + depth2`. **Path Compression** is a technique to update the parent node of all traversed elements to 
+their root node. When we search for the root node of the same element again, 
+we only need to traverse two elements to find its root node, which is highly efficient. See demonstration, 
 ```
 # 1-2-3-4 5-6
 # if union(5,6)
@@ -92,6 +105,7 @@ class UnionFind:
         self.rank = [1] * n
     
     def find(self, x): 
+        # with path compression
         if x == self.root[x]: 
             return x
         self.root[x] = self.find(root[x])
@@ -112,5 +126,7 @@ class UnionFind:
 </details>
 
 Related Problems: 
-- [547. Number of Provinces](https://leetcode.com/problems/number-of-provinces/)
+- 547_num_of_provinces 
+- 261_Graph_valid_tree
+- 323_Num_of_Connected_Components_in_Undirected_Graph
 - 
