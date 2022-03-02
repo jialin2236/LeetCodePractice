@@ -1,7 +1,8 @@
 # Graph key Topics
 ## Key Topics
 - Disjoint Set (UnionFind)
-  - Usage: build graph from given list of edges, quick display number of subgraphs and  
+  - Usage: build graph from given list of edges, quick display number of subgraphs and
+- Minimum Spanning Tree (MST)
 - DFS
 - BFS
 
@@ -129,4 +130,30 @@ Related Problems:
 - 547_num_of_provinces 
 - 261_Graph_valid_tree
 - 323_Num_of_Connected_Components_in_Undirected_Graph
-- 
+- 399_Evaluate_division 
+- 1168_optimize_water_distribution
+
+## Minimum Spanning Tree 
+Given a connected, edge-weighted and undirected graph, a MST is a subset of edges that connect all 
+vertices while the total weights of these edges are minimum among all possible subsets. 
+- Prim's algorithm
+- Kruskal's algorithm
+
+### Prim's algorithm
+algorithm iterates by building the tree one vertex at a time, from an arbitrary starting vertex, at each step adding
+the cheapest possible connection from any vertex in the tree to a vertex that is not in the tree. 
+
+Data Structure Needed: 
+1. adjacency list, to represent the graph
+2. set, to represent vertices that's been visited/added 
+3. heap, to represent the priority of the neighboring vertices
+
+### Kruskal's algorithm 
+we iterate through all the edges ordered by their costs. For each edge, we decide whether to add it to the final MST. 
+The decision is based on whether this new addition will help to connect more dots (i.e. vertices).
+
+steps:
+1. sort all the edges based on their costs, including the additional edges that are added with the virtual vertex.
+2. iterate through the sorted edges. 
+   1. For each edge, if both ends of the edge belong to different groups, with the help of the Union-Find data structure, 
+      we then add this edge into the final MST.

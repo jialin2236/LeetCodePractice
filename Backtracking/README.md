@@ -8,8 +8,8 @@ Backtracking could follow the following template of code:
 search_space = [SOME DEFINED SPACE GIVEN BY PROBLEM]
 answer = []
 def backtrack(index, partial_solution): 
-    # we've reached the end of the search space
-    if index == len(search_space): 
+    # we've reached the end of the search space / achieve a qualify solution
+    if index == len(search_space) or partial_solution is qualified: 
         answer.append(partial_solution)
         return
     for candidate in list_of_candidates_from_search_space: 

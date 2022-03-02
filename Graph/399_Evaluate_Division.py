@@ -93,12 +93,16 @@ class Solution:
             graph[d][n] = 1/v
 
         def backtracking(curr_node, target_node, curr_value, visited):
+            # we can fit our backtracking module to this function
             neighbors = graph[curr_node]
             nonlocal ret
+            # if target_node is found, update nonlocal variable ret and exit recursion
             if target_node in neighbors:
                 ret = curr_value * neighbors[target_node]
                 return
+            # otherwise, recursively explore each neighbor path of the curr_node
             for nei, val in neighbors.items():
+                # only explore feasible paths (neighbor nodes that has not been visited -> avoid cycle)
                 if nei not in visited:
                     visited.add(nei)
                     backtracking(nei, target_node, curr_value * val, visited)
