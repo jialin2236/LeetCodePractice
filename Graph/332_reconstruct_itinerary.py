@@ -22,7 +22,14 @@ from heapq import heappush, heappop
 
 class Solution:
     def findItinerary(self, tickets):
+        """
+        greedy DFS
+        :param tickets:
+        :return:
+        """
         targets = defaultdict(list)
+        # since we're doing a pop in dfs function, we should order the adjacency list in reverse order
+        # in order to pop out lower lexical destination first
         for a, b in sorted(tickets)[::-1]:
             targets[a] += b,
         route = []
@@ -31,4 +38,5 @@ class Solution:
                 visit(targets[airport].pop())
             route.append(airport)
         visit('JFK')
+        # JFK will be the last one to be added to the list, hence reversing the itinerary
         return route[::-1]

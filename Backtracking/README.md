@@ -9,8 +9,10 @@ search_space = [SOME DEFINED SPACE GIVEN BY PROBLEM]
 answer = []
 def backtrack(index, partial_solution): 
     # we've reached the end of the search space / achieve a qualify solution
-    if index == len(search_space) or partial_solution is qualified: 
-        answer.append(partial_solution)
+    if index == len(search_space) or partial_solution is qualified:
+        # NOTE: it's EXTREMELY important to append the COPY of the partial_solution,
+        # otherwise at the end it'd point it to the original value, which is empty (meaningless) 
+        answer.append(partial_solution.copy())
         return
     for candidate in list_of_candidates_from_search_space: 
         if candidate is feasible:

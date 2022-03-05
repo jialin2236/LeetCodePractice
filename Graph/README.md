@@ -157,3 +157,22 @@ steps:
 2. iterate through the sorted edges. 
    1. For each edge, if both ends of the edge belong to different groups, with the help of the Union-Find data structure, 
       we then add this edge into the final MST.
+
+
+## DFS - Depth First Search
+A method to explore all potential path by exploring depth first. 
+
+```
+# adj_list: represent relationship between nodes
+# start: starting point of the search
+visited = set()
+stack = deque()
+stack.append(start)
+
+while stack: 
+    top = stack.pop()
+    if top not in visited: 
+        visited.add(top)
+        for neighbor in adj_list[top]:
+            stack.append(neighbor)
+```
