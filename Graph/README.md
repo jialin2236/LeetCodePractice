@@ -136,6 +136,9 @@ Related Problems:
 ## Minimum Spanning Tree 
 Given a connected, edge-weighted and undirected graph, a MST is a subset of edges that connect all 
 vertices while the total weights of these edges are minimum among all possible subsets. 
+
+an undirected graph can have multiple spanning trees. 
+
 - Prim's algorithm
 - Kruskal's algorithm
 
