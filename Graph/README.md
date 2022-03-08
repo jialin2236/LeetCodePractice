@@ -246,7 +246,7 @@ while queue:
             if indegree[dest] == 0: 
                 queue.append(dest)
 
-return [] if len([i for i in indegree if i > 0]) else ans 
+return [] if len([i for i in indegree if i != 0]) else ans 
 ```
 
 
