@@ -3,9 +3,10 @@
 - Disjoint Set (UnionFind)
   - Usage: build graph from given list of edges, quick display number of subgraphs and
 - Minimum Spanning Tree (MST)
-- DFS
-- BFS
-- Dijkstra Algorithm 
+- DFS / BFS
+- Topological Sorting (Kahn's Algorithm)
+- Dijkstra Algorithm
+- Optional: Bellman Ford Algorithm 
 
 ## Disjoint Set
 key methods
@@ -163,7 +164,8 @@ steps:
       we then add this edge into the final MST.
 
 
-## DFS - Depth First Search
+## DFS / BFS
+### DFS - Depth First Search
 A method to explore all potential path by exploring depth first. 
 
 ```
@@ -180,6 +182,73 @@ while stack:
         for neighbor in adj_list[top]:
             stack.append(neighbor)
 ```
+
+### BFS - Breadth First Search
+BFS is the ideal choice when we're looking for the shortest path between two vertices in an undirected unweighted graph.
+It's a method to explore all potential paths by exploring breadth first. 
+
+```
+# adj_list: represent relationship between nodes
+# start: starting point of the search
+visited = set()
+stack = deque()
+stack.append(start)
+
+while stack: 
+    head = stack.popleft()
+    if head not in visited:
+        visited.add(head)
+        for neighbor in adj_list[top]: 
+            stack.append(neighbor)
+```
+
+## Topological Sorting (Khan's Algorithm)
+When given a DAG (directed acyclic graph), and asked to sort the vertices based on their relationship, topological sorting
+is used. It provides a linear sorting based on the required ordering between vertices in directed acyclic graphs. 
+
+Data Structure needed: 
+1. adjacency list from the input relationship 
+2. priority queue to store in-degree at different level of the algorithm
+3. queue to process nodes with the lower in-degree at each iteration
+
+Steps:
+- Construct the adjacency list if not already given
+- Construct the in-degree heap by traversing the adjacency list and counting the number of vertices pointing to 
+  each vertex
+- If no vertex has zero in-degree, return infeasibility
+- Extract the vertex with zero in-degree, store it in queue
+- Modify in-degree heap based on the previous processed vertex
+- Repeat until queue is empty
+
+```
+# adj_list: represent relationship between nodes (directed adj_list[i] = [from_i, to_i])
+# n: total number of vertices
+
+indegree = [0] * n
+queue, ans = deque(), []
+for source, dest in adj_list: 
+    indegree[dest] += 1
+
+for i in range(len(indegree)): 
+    if indegree[i] == 0: 
+        queue.append(i)
+
+if not queue: 
+# if no vertex has zero in-degree at the start, it's not a DAG, no solution
+    return [] 
+    
+while queue: 
+    head = queue.popleft()
+    ans.append(head)
+    for source, dest in adj_list: 
+        if source == head: 
+            indegree[dest] -= 1
+            if indegree[dest] == 0: 
+                queue.append(dest)
+
+return [] if len([i for i in indegree if i > 0]) else ans 
+```
+
 
 ## Dijkstra Algorithm 
 Dijkstra Algorithm is used to solve the "single-source shortest path" problem in a weighted directed graph with 
@@ -209,3 +278,9 @@ def dijkstra(graph: defaultdict, source: str, target: str) -> Dict[Tuple]:
         del remain[curr]
     return seen
 ```
+
+## Optional Bellman Ford Algorithm
+This algorithm is used to solve "single-source shortest path" problem with negative edge weights. The algorithm involves 
+using Dynamic Programming, and since DP is not part of the fundamental or "good to have" knowledge anymore, I'll only 
+include the link to the [tutorial](https://leetcode.com/explore/learn/card/graph/622/single-source-shortest-path-algorithm/3864/)
+for optional references. 

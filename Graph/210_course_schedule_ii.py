@@ -11,6 +11,8 @@ For example, the pair [0, 1], indicates that to take course 0 you have to first 
 Return the ordering of courses you should take to finish all courses. If there are many valid answers,
 return any of them. If it is impossible to finish all courses, return an empty array.
 """
+import collections
+
 """
 Idea
 Input: List[List[int]]
@@ -34,6 +36,37 @@ from collections import defaultdict
 
 
 class Solution:
+    def topological_sorting(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+        if numCourses == 0:
+            return []
+
+        if not prerequisites:
+            ans = [i for i in range(numCourses)]
+            return ans
+
+        in_degree = [0] * numCourses
+        queue = collections.deque()
+        ans = []
+        for course, prereq in prerequisites:
+            indegree[course] += 1
+        for i in range(numCourses):
+            if indegree[i] == 0:
+                queue.append(i)
+        if not queue:
+            return ans
+
+        while queue:
+            head = queue.popleft()
+            ans.append(head)
+            for course, prereq in prerequisites:
+                if prereq == head:
+                    in_degree[course] -= 1
+                    if in_degree[course] == 0:
+                        queue.append(course)
+
+        # if there's still vertex with non-zero in-degree (negative to be specific), we found a cycle
+        return [] if [i for i in in_degree if i != 0] else ans
+
     def schedule(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
         relationship = defaultdict(list)
         for c, p in prerequisites:
