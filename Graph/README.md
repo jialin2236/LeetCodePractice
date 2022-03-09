@@ -1,12 +1,15 @@
 # Graph key Topics
 ## Key Topics
-- Disjoint Set (UnionFind)
-  - Usage: build graph from given list of edges, quick display number of subgraphs and
-- Minimum Spanning Tree (MST)
-- DFS / BFS
-- Topological Sorting (Kahn's Algorithm)
-- Dijkstra Algorithm
-- Optional: Bellman Ford Algorithm 
+| topic | given | find | typical time complexity | typical space complexity | 
+| ---   | ---   | ---   |---                     | ---                      |
+| Disjoint Set (UnionFind) | edges (weighted or not), # of nodes build graph | construct vertices relationship  | see below | see below |
+| Minimum Spanning Tree (MST) | non-negative edge weights (undirected) | shortest path to traverse all vertices | *O(ElogV)* | *O(V)* |
+| DFS   | edges (unweighted) | Search/Traverse through every vertex | *O(V+E)* | *O(V)* | 
+| BFS   | edges (unweighted), source, target | Single source shortest path (a to b) | *O(V+E)* | *O(V)* |
+| Topological Sorting (Kahn's Algorithm) | edges (directed, unweighted) | sort vertices based on edges relationships in DAG (directed acyclic graph) | *O(V+E)* | *O(V+E)* |
+| Dijkstra Algorithm | edges (non negative weighted, directed), source, target | single source shortest path (source to target) | *O(ElogV)* | *O(V)* |
+| Bellman Ford Algorithm | edges (negative weighted, directed), source, target | single source shortest path involves DP (not in domain) | *O(VE)* | *O(V)* | 
+ 
 
 ## Disjoint Set
 Used when given
