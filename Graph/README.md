@@ -9,6 +9,23 @@
 - Optional: Bellman Ford Algorithm 
 
 ## Disjoint Set
+Used when given
+- provided number of nodes
+- provided a list of edges/connections
+
+and asked to 
+- identify number of connected components (disjoint sets)
+- if it's a tree / if every node is connected
+- summarize relationship of connected nodes (if given relationships)
+
+Sample problem descriptions: 
+- "Return number of connected components/groups/provinces/etc..." -> number of disjoint sets
+- "Identify if (when) all nodes are connected" -> single disjoint set 
+- "is a tree ? (n - 1 edges and acyclic single disjoint set)"
+- "Return minimum possible order of ... given nodes and their edges" -> could sort nodes by group
+- "Return the total path weight from node A to node B, given edges" -> node to root node relationship
+- "Minimum weight to cover all nodes" -> minimum spanning tree -> Kruskal (UnionFind)
+
 key methods
 
 |    |  constructor  | `find`  | `union` |

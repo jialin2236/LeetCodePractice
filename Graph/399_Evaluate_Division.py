@@ -1,5 +1,5 @@
 """
-Evaluate Division
+Evaluate Division (Hard)
 https://leetcode.com/explore/learn/card/graph/618/disjoint-set/3914/
 
 You are given an array of variable pairs equations and an array of real numbers values,
@@ -53,7 +53,7 @@ class Solution:
         :param equations:
         :param values:
         :param queries:
-        :return:
+        :return:\
         """
         def ch2idx(ch: List[str]):
             base = ord('a')
