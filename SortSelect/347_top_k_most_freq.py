@@ -19,7 +19,16 @@ from typing import List, Dict, Counter
 from collections import Counter
 from random import randint
 
+
 class Solution:
+    def bucket_sort(self, nums: List[int], k: int) -> List[int]:
+        cntr = collections.Counter(nums)
+        bucket = [[] for _ in range(len(nums) + 1)]
+        for num, freq in cntr.items():
+            bucket[freq].append(num)
+        flatten = [i for sl in bucket for i in sl][::-1]
+        return flatten[:k]
+
     def quick_select(self, counter: Counter, unique: List[int], left: int, right: int, k: int):
         def partition(pivot_idx: int):
             for i in range(len(unique)):

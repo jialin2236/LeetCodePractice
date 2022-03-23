@@ -37,35 +37,35 @@ from collections import defaultdict
 
 class Solution:
     def topological_sorting(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        if numCourses == 0:
-            return []
+        """
+        method: topological sorting
+        time: O(E) to traverse through prerequisites, at most O(V) to traverse through the queue -> O(V+E)
+        space: O(E) at most to store the graph, O(V) to store the queue -> O(V+E)
+        :param numCourses:
+        :param prerequisites:
+        :return:
+        """
+        graph = defaultdict(list)
+        in_degree = {}
 
-        if not prerequisites:
-            ans = [i for i in range(numCourses)]
-            return ans
+        for dest, src in prerequisites:
+            graph[src].append(dest)
+            in_degree[dest] = in_degree.get(dest, 0) + 1
 
-        in_degree = [0] * numCourses
-        queue = collections.deque()
+        queue = collections.deque([i for i in range(numCourses) if i not in in_degree])
         ans = []
-        for course, prereq in prerequisites:
-            indegree[course] += 1
-        for i in range(numCourses):
-            if indegree[i] == 0:
-                queue.append(i)
-        if not queue:
-            return ans
 
         while queue:
-            head = queue.popleft()
-            ans.append(head)
-            for course, prereq in prerequisites:
-                if prereq == head:
-                    in_degree[course] -= 1
-                    if in_degree[course] == 0:
-                        queue.append(course)
+            v = queue.popleft()
+            ans.append(v)
+            for nei in graph[v]:
+                in_degree[nei] -= 1
+                if in_degree[nei] == 0:
+                    queue.append(nei)
 
         # if there's still vertex with non-zero in-degree (negative to be specific), we found a cycle
-        return [] if [i for i in in_degree if i != 0] else ans
+        return ans if len(ans) == numCourses else []
+
 
     def schedule(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
         relationship = defaultdict(list)

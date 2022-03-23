@@ -11,29 +11,25 @@ Medium
 # 	 gaps between each neighboring character is the same?
 # 4. for a string with 5 character, it's sequence = [gap_0, gap_1, gap_2, gap_3] 
 # 	 where gap_i = ord(s[i+1]) - ord(s[i]) if positive else 26 + gap 
-# 5. could the string the empty? 
+# 5. could the string the empty?
+import collections
 from collections import defaultdict
+from typing import List
 
 
-class Solution: 
-	def get_pattern(s): 
-		if len(s) == 1: 
-			return (None, 1)
-		if not s:
-			return (None, 0)
-		else: 
-			sqn = []
-			for i in range(len(s) - 1):
-				diff = ord(s[i+1]) - ord(s[i])
-				diff = diff + 26 if diff < 0 else diff
-				sqn.append(diff)
-			return (sqn, len(s))
+class Solution:
+	def group_string(self, strings: List[str]) -> List[List[str]]:
+		def str2base(s: str) -> str:
+			res = []
+			base = ord(s[0])
+			for ch in s[1:]:
+				d2b = ord(ch) - base
+				adj_d2b = d2b if d2b >= 0 else (26 + d2b)
+				res.append(chr(adj_d2b + ord('a')))
+			return ''.join(res)
 
-
-	def group_str(strings): 
-		# use a hash map to store all sequence, and their qualifying strings
-		sequence = defaultdict(list)
+		seq_hash = defaultdict(list)
 		for string in strings:
-			str_pattern = self.get_pattern(string)
-			sequence[str_pattern].append(string)
-		return [i for i in sequence.items()]
+			base_string = str2base(string)
+			seq_hash[base_string].append(string)
+		return [grp for grp in seq_hash.values()]
