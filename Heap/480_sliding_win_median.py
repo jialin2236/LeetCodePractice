@@ -76,6 +76,8 @@ class Solution:
             if x >= large[0][0]:
                 heapq.heappush(large, (x, i+k))
                 if nums[i] <= large[0][0]:
+                    # remove element i out of the window scope
+                    # balance the 2 heap sizes (since we're removing num[i] from small)
                     move(large, small)
             else:
                 heapq.heappush(small, (-x, i+k))
