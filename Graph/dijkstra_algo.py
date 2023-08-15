@@ -4,6 +4,7 @@ with non-negative weights
 """
 from typing import Dict, Tuple
 from collections import defaultdict
+import heapq
 
 
 def dijkstra(graph: defaultdict, source: str, target: str) -> Dict[Tuple]:
@@ -21,3 +22,13 @@ def dijkstra(graph: defaultdict, source: str, target: str) -> Dict[Tuple]:
         seen[curr] = (d2s, adj)
         del remain[curr]
     return seen
+
+def dijkstra_heap(graph: defaultdict, source: str, target: str): 
+    seen, pq = set(), [(0, source)]
+    heapq.heapify(pq)
+    while pq: 
+        d2s, node = heapq.heappop(pq)
+        seen.add(node)
+        for dist, nei in graph[node]: 
+            if nei not in seen: 
+                heapq.heappush((d2s + dist, nei))
